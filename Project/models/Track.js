@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const trackSchema = new mongoose.Schema({
   artist: String,
   name: String,
