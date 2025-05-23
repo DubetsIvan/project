@@ -2,11 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDoc = require('./swagger/swagger.json');
+const swaggerDoc = require('./Project/swagger/swagger.json');
 
-const userRoutes = require('./routes/userRoutes');
-const playlistRoutes = require('./routes/playlistRoutes');
-const trackRoutes = require('./routes/trackRoutes');
+const userRoutes = require('./Project/routes/userRoutes');
+const playlistRoutes = require('./Project/routes/playlistRoutes');
+const trackRoutes = require('./Project/routes/trackRoutes');
 
 const app = express();
 app.use(express.json());

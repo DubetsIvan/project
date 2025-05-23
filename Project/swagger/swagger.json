@@ -22,13 +22,58 @@
         "responses": {
           "201": { "description": "Користувача створено" }
         }
+      },
+      "get": {
+        "summary": "Отримати список усіх користувачів",
+        "responses": {
+          "200": {
+            "description": "Список користувачів",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/User" }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/users/{id}": {
+      "get": {
+        "summary": "Отримати користувача за ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "ID користувача"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Користувача знайдено",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          },
+          "404": { "description": "Користувача не знайдено" },
+          "500": { "description": "Помилка сервера" }
+        }
+      },
       "delete": {
         "summary": "Видалити користувача та його плейлисти",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
         ],
         "responses": {
           "200": { "description": "Користувача видалено" }
@@ -42,18 +87,84 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Playlist"
-              }
+              "schema": { "$ref": "#/components/schemas/Playlist" }
             }
           }
         },
         "responses": {
           "201": { "description": "Плейлист створено" }
         }
+      },
+      "get": {
+        "summary": "Отримати всі плейлисти",
+        "responses": {
+          "200": {
+            "description": "Список плейлистів",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Playlist" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/playlists/user/{userId}": {
+      "get": {
+        "summary": "Отримати всі плейлисти користувача",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "ID користувача"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список плейлистів користувача",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Playlist" }
+                }
+              }
+            }
+          },
+          "404": { "description": "Користувача або плейлисти не знайдено" },
+          "500": { "description": "Помилка сервера" }
+        }
       }
     },
     "/api/playlists/{id}": {
+      "get": {
+        "summary": "Отримати плейлист за ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "ID плейлисту"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Плейлист знайдено",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Playlist" }
+              }
+            }
+          },
+          "404": { "description": "Плейлист не знайдено" }
+        }
+      },
       "delete": {
         "summary": "Видалити плейлист",
         "parameters": [
@@ -113,16 +224,14 @@
         }
       }
     },
-    "/api/playlists/{playlistId}/tracks/{trackId}": {
+    "/api/playlists/{id}/tracks/{trackId}": {
       "delete": {
         "summary": "Видалити трек з плейлисту",
         "parameters": [
-          { "name": "playlistId", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
           { "name": "trackId", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
-        "responses": {
-          "200": { "description": "Трек видалено" }
-        }
+        "responses": { "200": { "description": "Трек видалено" } }
       }
     },
     "/api/tracks": {
@@ -138,6 +247,22 @@
         },
         "responses": {
           "201": { "description": "Трек створено" }
+        }
+      },
+      "get": {
+        "summary": "Отримати список треків",
+        "responses": {
+          "200": {
+            "description": "Список треків",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Track" }
+                }
+              }
+            }
+          }
         }
       }
     },

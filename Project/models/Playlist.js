@@ -1,9 +1,19 @@
 const mongoose = require('mongoose');
 
 const playlistSchema = new mongoose.Schema({
-  name: String,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  tracks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Track' }],
-  createdAt: { type: Date, default: Date.now }
-});
+  name: {
+    type: String,
+    required: true
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  tracks: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Track'
+  }]
+}, { timestamps: true });
+
 module.exports = mongoose.model('Playlist', playlistSchema);
