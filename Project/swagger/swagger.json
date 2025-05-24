@@ -5,6 +5,76 @@
     "version": "1.0.0",
     "description": "API для створення, редагування та керування музичними плейлистами."
   },
+  "components": {
+    "parameters": {
+      "idParam": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" }
+      },
+      "userIdParam": {
+        "name": "userId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" }
+      },
+      "trackIdParam": {
+        "name": "trackId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" }
+      },
+      "tagParam": {
+        "name": "tag",
+        "in": "query",
+        "required": true,
+        "schema": { "type": "string" }
+      },
+      "dateParam": {
+        "name": "date",
+        "in": "query",
+        "required": true,
+        "schema": { "type": "string", "format": "date" }
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "email": { "type": "string" }
+        }
+      },
+      "Playlist": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "user": { "type": "string" },
+          "tracks": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "Track": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "artist": { "type": "string" },
+          "genre": { "type": "string" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  },
   "paths": {
     "/api/users": {
       "post": {
@@ -12,18 +82,10 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/User" } }
           }
         },
-        "responses": {
-          "201": {
-            "description": "Користувача створено"
-          }
-        }
+        "responses": { "201": { "description": "Користувача створено" } }
       },
       "get": {
         "summary": "Отримати список усіх користувачів",
@@ -32,12 +94,7 @@
             "description": "Список користувачів",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/User" } }
               }
             }
           }
@@ -47,53 +104,22 @@
     "/api/users/{id}": {
       "get": {
         "summary": "Отримати користувача за ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID користувача"
-          }
-        ],
+        "parameters": [ { "$ref": "#/components/parameters/idParam" } ],
         "responses": {
           "200": {
             "description": "Користувача знайдено",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/User" } }
             }
           },
-          "404": {
-            "description": "Користувача не знайдено"
-          },
-          "500": {
-            "description": "Помилка сервера"
-          }
+          "404": { "description": "Користувача не знайдено" },
+          "500": { "description": "Помилка сервера" }
         }
       },
       "delete": {
         "summary": "Видалити користувача та його плейлисти",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Користувача видалено"
-          }
-        }
+        "parameters": [ { "$ref": "#/components/parameters/idParam" } ],
+        "responses": { "200": { "description": "Користувача видалено" } }
       }
     },
     "/api/playlists": {
@@ -102,18 +128,10 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Playlist"
-              }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/Playlist" } }
           }
         },
-        "responses": {
-          "201": {
-            "description": "Плейлист створено"
-          }
-        }
+        "responses": { "201": { "description": "Плейлист створено" } }
       },
       "get": {
         "summary": "Отримати всі плейлисти",
@@ -122,12 +140,7 @@
             "description": "Список плейлистів",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Playlist"
-                  }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Playlist" } }
               }
             }
           }
@@ -137,100 +150,43 @@
     "/api/playlists/user/{userId}": {
       "get": {
         "summary": "Отримати всі плейлисти користувача",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID користувача"
-          }
-        ],
+        "parameters": [ { "$ref": "#/components/parameters/userIdParam" } ],
         "responses": {
           "200": {
             "description": "Список плейлистів користувача",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Playlist"
-                  }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Playlist" } }
               }
             }
           },
-          "404": {
-            "description": "Користувача або плейлисти не знайдено"
-          },
-          "500": {
-            "description": "Помилка сервера"
-          }
+          "404": { "description": "Користувача або плейлисти не знайдено" },
+          "500": { "description": "Помилка сервера" }
         }
       }
     },
     "/api/playlists/{id}": {
       "get": {
         "summary": "Отримати плейлист за ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID плейлисту"
-          }
-        ],
+        "parameters": [ { "$ref": "#/components/parameters/idParam" } ],
         "responses": {
           "200": {
             "description": "Плейлист знайдено",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Playlist"
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/Playlist" } }
             }
           },
-          "404": {
-            "description": "Плейлист не знайдено"
-          }
+          "404": { "description": "Плейлист не знайдено" }
         }
       },
       "delete": {
         "summary": "Видалити плейлист",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Плейлист видалено"
-          }
-        }
+        "parameters": [ { "$ref": "#/components/parameters/idParam" } ],
+        "responses": { "200": { "description": "Плейлист видалено" } }
       },
       "put": {
         "summary": "Змінити порядок треків",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [ { "$ref": "#/components/parameters/idParam" } ],
         "requestBody": {
           "required": true,
           "content": {
@@ -240,35 +196,20 @@
                 "properties": {
                   "trackIds": {
                     "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
+                    "items": { "type": "string" }
                   }
                 }
               }
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "Порядок оновлено"
-          }
-        }
+        "responses": { "200": { "description": "Порядок оновлено" } }
       }
     },
     "/api/playlists/{id}/tracks": {
       "post": {
         "summary": "Додати трек до плейлисту",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [ { "$ref": "#/components/parameters/idParam" } ],
         "requestBody": {
           "required": true,
           "content": {
@@ -276,47 +217,23 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "trackId": {
-                    "type": "string"
-                  }
+                  "trackId": { "type": "string" }
                 }
               }
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "Трек додано"
-          }
-        }
+        "responses": { "200": { "description": "Трек додано" } }
       }
     },
     "/api/playlists/{id}/tracks/{trackId}": {
       "delete": {
         "summary": "Видалити трек з плейлисту",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "trackId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
+          { "$ref": "#/components/parameters/idParam" },
+          { "$ref": "#/components/parameters/trackIdParam" }
         ],
-        "responses": {
-          "200": {
-            "description": "Трек видалено"
-          }
-        }
+        "responses": { "200": { "description": "Трек видалено" } }
       }
     },
     "/api/tracks": {
@@ -325,18 +242,10 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Track"
-              }
-            }
+            "application/json": { "schema": { "$ref": "#/components/schemas/Track" } }
           }
         },
-        "responses": {
-          "201": {
-            "description": "Трек створено"
-          }
-        }
+        "responses": { "201": { "description": "Трек створено" } }
       },
       "get": {
         "summary": "Отримати список треків",
@@ -345,12 +254,7 @@
             "description": "Список треків",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Track"
-                  }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Track" } }
               }
             }
           }
@@ -360,125 +264,34 @@
     "/api/tracks/search-by-tag": {
       "get": {
         "summary": "Пошук треків за тегом",
-        "parameters": [
-          {
-            "name": "tag",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Тег для пошуку"
-          }
-        ],
+        "parameters": [ { "$ref": "#/components/parameters/tagParam" } ],
         "responses": {
           "200": {
             "description": "Список треків з вказаним тегом",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Track"
-                  }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Track" } }
               }
             }
           },
-          "404": {
-            "description": "Треків з таким тегом не знайдено"
-          }
+          "404": { "description": "Треків з таким тегом не знайдено" }
         }
       }
     },
     "/api/tracks/search-by-date": {
       "get": {
         "summary": "Пошук треків за датою створення",
-        "parameters": [
-          {
-            "name": "date",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            },
-            "description": "Дата у форматі YYYY-MM-DD"
-          }
-        ],
+        "parameters": [ { "$ref": "#/components/parameters/dateParam" } ],
         "responses": {
           "200": {
             "description": "Список треків створених після вказаної дати",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Track"
-                  }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Track" } }
               }
             }
           },
-          "404": {
-            "description": "Треків за цією датою не знайдено"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "User": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          }
-        }
-      },
-      "Playlist": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "user": {
-            "type": "string"
-          },
-          "tracks": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "Track": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "artist": {
-            "type": "string"
-          },
-          "genre": {
-            "type": "string"
-          },
-          "tags": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          }
+          "404": { "description": "Треків за цією датою не знайдено" }
         }
       }
     }
