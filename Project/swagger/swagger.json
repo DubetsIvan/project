@@ -20,7 +20,9 @@
           }
         },
         "responses": {
-          "201": { "description": "Користувача створено" }
+          "201": {
+            "description": "Користувача створено"
+          }
         }
       },
       "get": {
@@ -32,7 +34,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/User" }
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
                 }
               }
             }
@@ -48,7 +52,9 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" },
+            "schema": {
+              "type": "string"
+            },
             "description": "ID користувача"
           }
         ],
@@ -57,12 +63,18 @@
             "description": "Користувача знайдено",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/User" }
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
               }
             }
           },
-          "404": { "description": "Користувача не знайдено" },
-          "500": { "description": "Помилка сервера" }
+          "404": {
+            "description": "Користувача не знайдено"
+          },
+          "500": {
+            "description": "Помилка сервера"
+          }
         }
       },
       "delete": {
@@ -72,11 +84,15 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "Користувача видалено" }
+          "200": {
+            "description": "Користувача видалено"
+          }
         }
       }
     },
@@ -87,12 +103,16 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/Playlist" }
+              "schema": {
+                "$ref": "#/components/schemas/Playlist"
+              }
             }
           }
         },
         "responses": {
-          "201": { "description": "Плейлист створено" }
+          "201": {
+            "description": "Плейлист створено"
+          }
         }
       },
       "get": {
@@ -104,7 +124,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Playlist" }
+                  "items": {
+                    "$ref": "#/components/schemas/Playlist"
+                  }
                 }
               }
             }
@@ -120,7 +142,9 @@
             "name": "userId",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" },
+            "schema": {
+              "type": "string"
+            },
             "description": "ID користувача"
           }
         ],
@@ -131,13 +155,19 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Playlist" }
+                  "items": {
+                    "$ref": "#/components/schemas/Playlist"
+                  }
                 }
               }
             }
           },
-          "404": { "description": "Користувача або плейлисти не знайдено" },
-          "500": { "description": "Помилка сервера" }
+          "404": {
+            "description": "Користувача або плейлисти не знайдено"
+          },
+          "500": {
+            "description": "Помилка сервера"
+          }
         }
       }
     },
@@ -149,7 +179,9 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" },
+            "schema": {
+              "type": "string"
+            },
             "description": "ID плейлисту"
           }
         ],
@@ -158,26 +190,46 @@
             "description": "Плейлист знайдено",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Playlist" }
+                "schema": {
+                  "$ref": "#/components/schemas/Playlist"
+                }
               }
             }
           },
-          "404": { "description": "Плейлист не знайдено" }
+          "404": {
+            "description": "Плейлист не знайдено"
+          }
         }
       },
       "delete": {
         "summary": "Видалити плейлист",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Плейлист видалено" }
+          "200": {
+            "description": "Плейлист видалено"
+          }
         }
       },
       "put": {
         "summary": "Змінити порядок треків",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "requestBody": {
           "required": true,
@@ -188,7 +240,9 @@
                 "properties": {
                   "trackIds": {
                     "type": "array",
-                    "items": { "type": "string" }
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -196,7 +250,9 @@
           }
         },
         "responses": {
-          "200": { "description": "Порядок оновлено" }
+          "200": {
+            "description": "Порядок оновлено"
+          }
         }
       }
     },
@@ -204,7 +260,14 @@
       "post": {
         "summary": "Додати трек до плейлисту",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "requestBody": {
           "required": true,
@@ -213,14 +276,18 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "trackId": { "type": "string" }
+                  "trackId": {
+                    "type": "string"
+                  }
                 }
               }
             }
           }
         },
         "responses": {
-          "200": { "description": "Трек додано" }
+          "200": {
+            "description": "Трек додано"
+          }
         }
       }
     },
@@ -228,10 +295,28 @@
       "delete": {
         "summary": "Видалити трек з плейлисту",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
-          { "name": "trackId", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "trackId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
-        "responses": { "200": { "description": "Трек видалено" } }
+        "responses": {
+          "200": {
+            "description": "Трек видалено"
+          }
+        }
       }
     },
     "/api/tracks": {
@@ -241,12 +326,16 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/Track" }
+              "schema": {
+                "$ref": "#/components/schemas/Track"
+              }
             }
           }
         },
         "responses": {
-          "201": { "description": "Трек створено" }
+          "201": {
+            "description": "Трек створено"
+          }
         }
       },
       "get": {
@@ -258,7 +347,9 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/Track" }
+                  "items": {
+                    "$ref": "#/components/schemas/Track"
+                  }
                 }
               }
             }
@@ -266,15 +357,72 @@
         }
       }
     },
-    "/api/tracks/search": {
+    "/api/tracks/search-by-tag": {
       "get": {
-        "summary": "Пошук треків за тегом та/або датою",
+        "summary": "Пошук треків за тегом",
         "parameters": [
-          { "name": "tag", "in": "query", "schema": { "type": "string" } },
-          { "name": "date", "in": "query", "schema": { "type": "string", "format": "date" } }
+          {
+            "name": "tag",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Тег для пошуку"
+          }
         ],
         "responses": {
-          "200": { "description": "Список знайдених треків" }
+          "200": {
+            "description": "Список треків з вказаним тегом",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Track"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Треків з таким тегом не знайдено"
+          }
+        }
+      }
+    },
+    "/api/tracks/search-by-date": {
+      "get": {
+        "summary": "Пошук треків за датою створення",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Дата у форматі YYYY-MM-DD"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Список треків створених після вказаної дати",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Track"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Треків за цією датою не знайдено"
+          }
         }
       }
     }
@@ -284,30 +432,52 @@
       "User": {
         "type": "object",
         "properties": {
-          "username": { "type": "string" },
-          "email": { "type": "string" }
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
         }
       },
       "Playlist": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "user": { "type": "string" },
+          "name": {
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
           "tracks": {
             "type": "array",
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
       "Track": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "artist": { "type": "string" },
-          "genre": { "type": "string" },
+          "name": {
+            "type": "string"
+          },
+          "artist": {
+            "type": "string"
+          },
+          "genre": {
+            "type": "string"
+          },
           "tags": {
             "type": "array",
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }
