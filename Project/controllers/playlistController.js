@@ -10,6 +10,17 @@ exports.getAllPlaylists = async (req, res) => {
   }
 }
 
+exports.getPlaylistById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const playlist = await Playlist.findById(id).populate('tracks');
+    if (!playlist) return res.status(404).json({ error: 'Playlist not found' });
+    res.status(200).json(playlist);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch playlist', details: err.message });
+  }
+}
+
 exports.createPlaylist = async (req, res) => {
   try {
     const { name, tracks, user } = req.body;
