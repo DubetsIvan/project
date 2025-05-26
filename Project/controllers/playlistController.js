@@ -44,14 +44,29 @@ exports.deletePlaylist = async (req, res) => {
 exports.reorderTracks = async (req, res) => {
   try {
     const { id } = req.params;
-    const updated = await Playlist.findByIdAndUpdate(
-      id,
-      { tracks: req.body.trackIds },
-      { new: true }
-    );
-    res.status(200).json(updated);
+    const { trackIds } = req.body;
+
+    const playlist = await Playlist.findById(id);
+    if (!playlist) return res.status(404).json({ error: 'Playlist not found' });
+
+    // перевірка, чи передані ID є підмножиною існуючих треків
+    const allTrackIds = playlist.tracks.map(id => id.toString());
+    const providedIds = trackIds.map(id => id.toString());
+
+    const isSameLength = allTrackIds.length === providedIds.length;
+    const isSameContent = allTrackIds.every(id => providedIds.includes(id));
+
+    if (!isSameLength || !isSameContent) {
+      return res.status(400).json({ error: 'Provided trackIds do not match existing tracks in playlist' });
+    }
+
+    // оновлення порядку
+    playlist.tracks = trackIds;
+    await playlist.save();
+
+    res.status(200).json({ message: 'Tracks reordered successfully', playlist });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to reorder tracks' });
+    res.status(500).json({ error: 'Failed to reorder tracks', details: err.message });
   }
 };
 
