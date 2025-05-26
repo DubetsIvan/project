@@ -72,6 +72,17 @@
             "format": "date-time"
           }
         }
+      },
+      "UpdatePlaylistOrderRequest": {
+        "type": "object",
+        "required": ["trackIds"],
+        "properties": {
+          "trackIds": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Новий порядок ID треків у плейлисті"
+          }
+        }
       }
     }
   },
@@ -183,27 +194,26 @@
         "summary": "Видалити плейлист",
         "parameters": [ { "$ref": "#/components/parameters/idParam" } ],
         "responses": { "200": { "description": "Плейлист видалено" } }
-      },
+      }
+    },
+    "/api/playlists/{id}/reorder": {
       "put": {
-        "summary": "Змінити порядок треків",
+        "summary": "Оновити порядок треків у плейлисті",
         "parameters": [ { "$ref": "#/components/parameters/idParam" } ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "trackIds": {
-                    "type": "array",
-                    "items": { "type": "string" }
-                  }
-                }
-              }
+              "schema": { "$ref": "#/components/schemas/UpdatePlaylistOrderRequest" }
             }
           }
         },
-        "responses": { "200": { "description": "Порядок оновлено" } }
+        "responses": {
+          "200": { "description": "Порядок треків оновлено" },
+          "400": { "description": "Невалідні дані: відсутній trackIds або некоректний формат" },
+          "404": { "description": "Плейлист не знайдено" },
+          "500": { "description": "Внутрішня помилка сервера" }
+        }
       }
     },
     "/api/playlists/{id}/tracks": {
