@@ -122,13 +122,3 @@ exports.searchTracksInPlaylist = async (req, res) => {
     res.status(500).json({ error: 'Failed to search tracks' });
   }
 };
-
-exports.getUserPlaylists = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const playlists = await Playlist.find({ user: userId }).populate('tracks');
-    res.status(200).json(playlists);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to get user playlists', details: err.message });
-  }
-};
